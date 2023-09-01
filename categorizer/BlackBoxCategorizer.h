@@ -18,8 +18,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CATEGORIZER_NEURALCATEGORIZER_H
-#define CATEGORIZER_NEURALCATEGORIZER_H
+#ifndef CATEGORIZER_BLACKBOXCATEGORIZER_H
+#define CATEGORIZER_BLACKBOXCATEGORIZER_H
 
 #include <boost/numeric/ublas/tensor.hpp>
 #include <categorizer/TensorTransformer.h>
@@ -29,18 +29,20 @@ namespace categorizer {
 
 template<typename Precision,
 		TensorTransformer<Precision> TransformerType>
-class NeuralCategorizer {
+class BlackBoxCategorizer {
 public:
 	void extract_features(TransformerType transformer, std::size_t iterations) {
 		// extract neural net features
 		using namespace boost::numeric::ublas;
 
-		std::cout << "generating noise..." << std::endl;
-		auto noise = generate_noise(transformer);
-		std::cout << "generated input noise: " << std::endl << noise << std::endl;
-		tensor<Precision> result{transformer.get_output_shape()};
-		transformer(noise, result);
-		std::cout << "output: " << std::endl << result << std::endl;
+		for(auto i = 0; i < iterations; ++i) {
+			std::cout << "generating noise..." << std::endl;
+			auto noise = generate_noise(transformer);
+			std::cout << "generated input noise: " << std::endl << noise << std::endl;
+			tensor<Precision> result{transformer.get_output_shape()};
+			transformer(noise, result);
+			std::cout << "output: " << std::endl << result << std::endl;
+		}
 	}
 private:
 	boost::numeric::ublas::tensor<Precision> generate_noise(TransformerType transformer, std::size_t seed = 0) {
@@ -57,4 +59,4 @@ private:
 } // namespace categorizer
 
 
-#endif //CATEGORIZER_NEURALCATEGORIZER_H
+#endif //CATEGORIZER_BLACKBOXCATEGORIZER_H

@@ -1,5 +1,5 @@
 #include <iostream>
-#include <categorizer/NeuralCategorizer.h>
+#include <categorizer/BlackBoxCategorizer.h>
 
 class TestNet {
 public:
@@ -20,8 +20,8 @@ using namespace categorizer;
 
 int main() {
 	TestNet test_net;
-	NeuralCategorizer<float, TestNet> categorizer;
-	categorizer.extract_features(test_net, 100);
+	BlackBoxCategorizer<float, TestNet> categorizer;
+	categorizer.extract_features(test_net, 1);
 
 	return 0;
 }

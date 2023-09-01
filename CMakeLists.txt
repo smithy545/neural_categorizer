@@ -8,7 +8,7 @@ if(Boost_FOUND)
     include_directories(. ${Boost_INCLUDE_DIRS})
     add_executable(categorizer
             main.cpp
-            categorizer/NeuralCategorizer.h
+            categorizer/BlackBoxCategorizer.h
             categorizer/TensorTransformer.h)
 else()
     message("Boost not found. Aborting build.")
